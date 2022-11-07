@@ -1,30 +1,19 @@
 import React, {FC} from 'react';
 import burger from "../assets/burger.png";
 import close from "../assets/close.svg";
+import {IDapplet} from "../@types/dapplet";
+import {useSelector} from "react-redux";
+import {RootState} from "../redux/store";
+import {ITag} from "../@types/tag";
 
-export  interface DappletPropsInterface {
-    id: string
-    icon: string
-    title: string
-    author: string
-    rating: number
-    address: string
-    released: string
-    downloads: number
-    description: string
-    text_1: string
-    text_2: string
-    text_3: string
-    text_4: string
-    text_5: string
-    text_6: string
-    text_7: string
-    text_8: string
-    text_9: string
-    tags: string[]
-}
+const Dapplet: FC<IDapplet> = ({icon, title, address, description, author, tags}) => {
+    const {tags: tagsName} = useSelector((state: RootState) => state.dapplets)
+    const tagsForView: string[] = []
+    tags.map((item) => {
+        const correct =  tagsName.find((tagName: ITag) => tagName.id === item)
+        if (correct) tagsForView.push(correct.name)
+    })
 
-const Dapplet: FC<DappletPropsInterface> = ({icon, title, address, description, author}) => {
     return (
         <div className="dapplet__item">
             <div className={'dapplet__actions'}>
@@ -42,8 +31,7 @@ const Dapplet: FC<DappletPropsInterface> = ({icon, title, address, description, 
             <div className="dapplet__tags tags">
                 <ul className='dapplet__tags tags__list'>
                     {
-                        ['Social Media', 'Finances', 'Twitter', 'Top 100',].map((item, index) =>
-                            // ToDo: change index to id
+                        tagsForView.map((item, index) =>
                             <li key={index} className={'tags__item tags__item-green'}>
                                 {item}
                                 <img className={'close-icon'} src={close} alt="close"/>

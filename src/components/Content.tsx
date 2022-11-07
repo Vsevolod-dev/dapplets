@@ -1,17 +1,19 @@
-import React, {FC, useEffect, useState} from 'react';
-import axios from "axios";
+import React, {FC, useEffect} from 'react';
 import Header from "./Header";
 import Filters from "./Filters";
-import Dapplet, {DappletPropsInterface} from "./Dapplet";
+import Dapplet from "./Dapplet";
+import {RootState, useAppDispatch} from "../redux/store";
+import {useSelector} from "react-redux";
+import {getDapplets, getTags} from "../redux/slices/dappletsSlice";
+import {IDapplet} from "../@types/dapplet";
 
 const Content: FC = () => {
-    const [companies, setCompanies] = useState([]);
+    const dispatch = useAppDispatch()
+    const {dapplets} = useSelector((state: RootState) => state.dapplets)
 
     useEffect(() => {
-        axios.get('https://dapplets-hiring-api.herokuapp.com/api/v1/dapplets')
-            .then(res => {
-                setCompanies(res.data.data)
-            })
+        dispatch(getTags())
+        dispatch(getDapplets())
     }, [])
 
     return (
@@ -23,7 +25,9 @@ const Content: FC = () => {
                     <hr/>
                     <div className="content__dapplets dapplets">
                         {
-                            companies.map((dapplet: DappletPropsInterface) => <Dapplet key={dapplet.id} {...dapplet}/>)
+                            dapplets
+                                ? dapplets.map((dapplet: IDapplet) => <Dapplet key={dapplet.id} {...dapplet} />)
+                                : <div>Loading...</div>
                         }
                     </div>
                 </div>
