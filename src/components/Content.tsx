@@ -1,24 +1,27 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC, RefObject, useEffect} from 'react';
 import Header from "./Header";
 import Filters from "./Filters";
 import Dapplet from "./Dapplet";
 import {RootState, useAppDispatch} from "../redux/store";
 import {useSelector} from "react-redux";
-import {getDapplets, getTags} from "../redux/slices/dappletsSlice";
+import {getTags} from "../redux/slices/dappletsSlice";
 import {IDapplet} from "../@types/dapplet";
 
-const Content: FC = () => {
+type ContentProps = {
+    contentRef: RefObject<HTMLDivElement>
+}
+
+const Content: FC<ContentProps> = ({contentRef}) => {
     const dispatch = useAppDispatch()
     const {dapplets} = useSelector((state: RootState) => state.dapplets)
 
     useEffect(() => {
         dispatch(getTags())
-        dispatch(getDapplets())
     }, [])
 
     return (
-        <div className="content">
-            <div className="container">
+        <div className="content" ref={contentRef}>
+            {/*<div className="container">*/}
                 <Header/>
                 <div className="content__main">
                     <Filters/>
@@ -27,11 +30,11 @@ const Content: FC = () => {
                         {
                             dapplets
                                 ? dapplets.map((dapplet: IDapplet) => <Dapplet key={dapplet.id} {...dapplet} />)
-                                : <div>Loading...</div>
+                                : <h2>Loading...</h2>
                         }
                     </div>
                 </div>
-            </div>
+            {/*</div>*/}
         </div>
     );
 };

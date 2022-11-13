@@ -12,6 +12,10 @@
     justify-content: space-between;
 }
 
+.none {
+    display: none !important;
+}
+
 .background {
     position: absolute;
     z-index: -1;
@@ -39,7 +43,14 @@ hr {
 
 .container {
     max-width: $containerWidth;
-    margin: 0 auto;
+}
+
+.echo__left-side {
+    width: 360px;
+}
+
+.echo__left-right {
+    width: 320px;
 }
 
 .left-side, .right-side {
@@ -140,14 +151,13 @@ hr {
 }
 
 .content {
-    margin-left: 360px;
-    width: 64.5%;
     position: relative;
 
     &__header {
         position: fixed;
         top: 0;
-        width: 64.5%;
+        left: 360px;
+        right: 320px;
         z-index: 1;
 
         height: 56px;
@@ -331,6 +341,10 @@ hr {
     &__filters {
         display: flex;
         gap: 20px;
+
+        input {
+            width: 89%;
+        }
     }
 
     &__search {
@@ -345,7 +359,7 @@ hr {
         }
     }
 
-    &__release-date {
+    &__sort {
         flex-grow: 1;
         background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%), rgba(255, 255, 255, 0.8);
         box-shadow: 10px 10px 40px rgba(156, 185, 222, 0.36);
@@ -355,7 +369,7 @@ hr {
         color: #2A2A2A;
     }
 
-    &__descending {
+    &__direction {
         flex-grow: 1;
         background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%), rgba(255, 255, 255, 0.8);
         box-shadow: 10px 10px 40px rgba(156, 185, 222, 0.36);
@@ -379,7 +393,8 @@ hr {
     }
 
     &__about {
-        width: 212px;
+        //max-width: 212px;
+        flex: 2;
     }
 
     &__title {
@@ -398,7 +413,8 @@ hr {
 
     &__description {
         color: #565555;
-        width: 270px;
+        //max-width: 270px;
+        flex: 2;
 
         overflow: hidden;
         display: -webkit-box;
@@ -411,12 +427,14 @@ hr {
         font-size: 14px;
         line-height: 16px;
         color: #BBBBBB;
-        width: 115px;
+        //max-width: 115px;
+        flex: 1;
     }
 
     &__tags {
         padding: 0;
-        width: 150px;
+        max-width: 150px;
+        flex: 2;
     }
 
     &__tags.tags__list {

@@ -13,10 +13,16 @@ const initialState: DappletsSliceState = {
     tags: []
 }
 
+export type filtersType = {
+    'search': string
+    'sort': string
+    'direction': string
+}
+
 export const getDapplets = createAsyncThunk(
     'dapplets/getDapplets',
-    async () => {
-        const response = await DappletsService.fetchDapplets()
+    async (filters: filtersType) => {
+        const response = await DappletsService.fetchDapplets(filters)
         return response.data.data
     }
 )

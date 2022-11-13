@@ -1,12 +1,19 @@
-import React, {FC} from 'react';
+import React, {FC, RefObject} from 'react';
 import rightArrow from "../assets/arrow-right.svg";
 import close from "../assets/close.svg";
 import closeOrange from "../assets/close_orange.svg";
 
-const RightSide: FC = () => {
+type RightSideProps = {
+    rightSideRef: RefObject<HTMLDivElement>
+    hideShow: (side: 'left' | 'right', value: boolean) => void
+}
+
+const RightSide: FC<RightSideProps> = ({rightSideRef, hideShow}) => {
     return (
-        <div className="right-side">
-            <img className={'right-side__right-arrow'} src={rightArrow} alt="rightArrow"/>
+        <div>
+            <div className="echo__left-right"/>
+            <div className="right-side" ref={rightSideRef}>
+            <img className={'right-side__right-arrow'} src={rightArrow} alt="rightArrow" onClick={() => hideShow('right', true)}/>
             <div className="right-side__title title">Dapplet Settings</div>
             <div className="create">
                 <div className="create__title">Create new list</div>
@@ -71,6 +78,7 @@ const RightSide: FC = () => {
                     }
                 </ul>
             </div>
+        </div>
         </div>
     );
 };
