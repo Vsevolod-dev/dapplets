@@ -13,8 +13,6 @@ function App() {
     const [rightSideHidden, setRightSideHidden] = useState(false);
 
     useEffect(() => {
-        console.log(leftSideHidden, rightSideHidden)
-
         const leftSideElem: HTMLDivElement = leftSideRef.current as HTMLDivElement
         const contentElem: HTMLDivElement = contentRef.current as HTMLDivElement
 

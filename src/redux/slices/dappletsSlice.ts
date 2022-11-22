@@ -1,29 +1,27 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import DappletsService from "../../api/DappletsService";
+import DappletsService, {IFiltersService} from "../../api/DappletsService";
 import {IDapplet} from "../../@types/dapplet";
 import {ITag} from "../../@types/tag";
 
 interface DappletsSliceState {
     dapplets: IDapplet[],
-    tags: ITag[]
+    tags: ITag[],
+    total: number
+    errors: boolean,
 }
 
 const initialState: DappletsSliceState = {
     dapplets: [],
-    tags: []
-}
-
-export type filtersType = {
-    'search': string
-    'sort': string
-    'direction': string
+    tags: [],
+    errors: false,
+    total: 0
 }
 
 export const getDapplets = createAsyncThunk(
     'dapplets/getDapplets',
-    async (filters: filtersType) => {
+    async (filters: IFiltersService) => {
         const response = await DappletsService.fetchDapplets(filters)
-        return response.data.data
+        return response.data
     }
 )
 
@@ -42,14 +40,18 @@ export const dappletsSlice = createSlice({
     extraReducers: builder => {
         builder
             .addCase(getDapplets.fulfilled, (state, action) => {
-                state.dapplets = action.payload
+                state.dapplets = [...state.dapplets, ...action.payload.data]
+                state.total = action.payload.total
+                state.errors = false
+            })
+            .addCase(getDapplets.rejected, (state, action) => {
+                console.log('error')
+                state.errors = true
             })
             .addCase(getTags.fulfilled, (state, action) => {
                 state.tags = action.payload
             })
     }
 })
-
-export const {} = dappletsSlice.actions
 
 export default dappletsSlice.reducer

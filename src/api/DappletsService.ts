@@ -1,5 +1,16 @@
 import axios, { AxiosResponse } from "axios";
-import {filtersType} from "../redux/slices/dappletsSlice";
+import {FiltersSliceState} from "../redux/slices/filtersSlice";
+
+export interface IFiltersService extends FiltersSliceState {
+    start: number
+}
+
+interface IParams {
+    filter?: string
+    sort?: string
+    limit: number
+    start: number
+}
 
 export default class TicketsService {
 
@@ -9,11 +20,11 @@ export default class TicketsService {
         return axios.get(this.url + `/tags`)
     }
 
-    static async fetchDapplets(filters: filtersType): Promise<AxiosResponse> {
-        const params: {
-            filter?: string
-            sort?: string
-        } = {}
+    static async fetchDapplets(filters: IFiltersService): Promise<AxiosResponse> {
+        const params: IParams = {
+            limit: 10,
+            start: filters.start
+        }
         if (filters.search) {
             params.filter = JSON.stringify([
                 {
