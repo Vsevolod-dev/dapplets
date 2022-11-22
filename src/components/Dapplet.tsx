@@ -15,7 +15,7 @@ const Dapplet: FC<IDapplet> = (props) => {
     useEffect(() => {
         const expandedElem: HTMLDivElement = expandedRef.current as HTMLDivElement
 
-        expandedElem!.style.padding = expanded ? '20px 125px' : ''
+        expandedElem!.style.padding = expanded ? '20px 0' : ''
         expandedElem!.style.transform = expanded ? 'translateY(0)' : 'translateY(-50%)'
         expandedElem!.style.height = expanded ? 'unset' : '0'
     }, [expanded]);
@@ -73,16 +73,43 @@ const Dapplet: FC<IDapplet> = (props) => {
             </div>
             {
                 <div className="dapplet__expanded" ref={expandedRef}>
-                    <div className="dapplet__text_1">{props.text_1}</div>
+                    <div className="dapplet__text-main">
+                        <div>Lorem</div>
+                        {props.text_1}
+                    </div>
                     <div className="dapplet__other">
-                        <div className="dapplet__text_2">{props.text_2}</div>
-                        <div className="dapplet__text_3">{props.text_3}</div>
-                        <div className="dapplet__text_4">{props.text_4}</div>
-                        <div className="dapplet__text_5">{props.text_5}</div>
-                        <div className="dapplet__text_6">{props.text_6}</div>
-                        <div className="dapplet__text_7">{props.text_7}</div>
-                        <div className="dapplet__text_8">{props.text_8}</div>
-                        <div className="dapplet__text_9">{props.text_9}</div>
+                        <div className="dapplet__text-secondary">
+                            <div>Lorem</div>
+                            {props.text_2}
+                        </div>
+                        <div className="dapplet__text-secondary">
+                            <div>Lorem</div>
+                            {props.text_3}
+                        </div>
+                        <div className="dapplet__text-secondary">
+                            <div>Lorem</div>
+                            {props.text_4}
+                        </div>
+                        <div className="dapplet__text-secondary">
+                            <div>Lorem</div>
+                            {props.text_5}
+                        </div>
+                        <div className="dapplet__text-secondary">
+                            <div>Lorem</div>
+                            {props.text_6}
+                        </div>
+                        <div className="dapplet__text-secondary">
+                            <div>Lorem</div>
+                            {props.text_7}
+                        </div>
+                        <div className="dapplet__text-secondary">
+                            <div>Lorem</div>
+                            {props.text_8}
+                        </div>
+                        <div className="dapplet__text-secondary">
+                            <div>Lorem</div>
+                            {props.text_9}
+                        </div>
                     </div>
                 </div>
             }

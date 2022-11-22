@@ -11,7 +11,7 @@ type RightSideProps = {
 const RightSide: FC<RightSideProps> = ({rightSideRef, hideShow}) => {
     return (
         <div>
-            <div className="echo__left-right"/>
+            <div className="echo__right-side"/>
             <div className="right-side" ref={rightSideRef}>
             <img className={'right-side__right-arrow'} src={rightArrow} alt="rightArrow" onClick={() => hideShow('right', true)}/>
             <div className="right-side__title title">Dapplet Settings</div>

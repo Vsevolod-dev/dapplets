@@ -1,7 +1,8 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import DappletsService, {IFiltersService} from "../../api/DappletsService";
+import DappletsService from "../../api/DappletsService";
 import {IDapplet} from "../../@types/dapplet";
 import {ITag} from "../../@types/tag";
+import {filtersSlice} from "./filtersSlice";
 
 interface DappletsSliceState {
     dapplets: IDapplet[],
@@ -17,13 +18,13 @@ const initialState: DappletsSliceState = {
     total: 0
 }
 
-export const getDapplets = createAsyncThunk(
-    'dapplets/getDapplets',
-    async (filters: IFiltersService) => {
-        const response = await DappletsService.fetchDapplets(filters)
-        return response.data
-    }
-)
+// export const getDapplets = createAsyncThunk(
+//     'dapplets/getDapplets',
+//     async (filters: IFiltersService) => {
+//         const response = await DappletsService.fetchDapplets(filters)
+//         return response.data
+//     }
+// )
 
 export const getTags = createAsyncThunk(
     'dapplets/getTags',
@@ -36,22 +37,33 @@ export const getTags = createAsyncThunk(
 export const dappletsSlice = createSlice({
     name: 'dapplets',
     initialState,
-    reducers: {},
+    reducers: {
+        setDapplets(state, action) {
+            state.dapplets = action.payload.data
+            state.total = action.payload.total
+        },
+        addDapplets(state, action) {
+            state.dapplets = [...state.dapplets, ...action.payload.data]
+            state.total = action.payload.total
+        }
+    },
     extraReducers: builder => {
         builder
-            .addCase(getDapplets.fulfilled, (state, action) => {
-                state.dapplets = [...state.dapplets, ...action.payload.data]
-                state.total = action.payload.total
-                state.errors = false
-            })
-            .addCase(getDapplets.rejected, (state, action) => {
-                console.log('error')
-                state.errors = true
-            })
+            // .addCase(getDapplets.fulfilled, (state, action) => {
+            //     state.dapplets = [...state.dapplets, ...action.payload.data]
+            //     state.total = action.payload.total
+            //     state.errors = false
+            // })
+            // .addCase(getDapplets.rejected, (state, action) => {
+            //     console.log('error')
+            //     state.errors = true
+            // })
             .addCase(getTags.fulfilled, (state, action) => {
                 state.tags = action.payload
             })
     }
 })
+
+export const {setDapplets, addDapplets} = dappletsSlice.actions
 
 export default dappletsSlice.reducer
